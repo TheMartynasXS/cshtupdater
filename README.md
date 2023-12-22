@@ -8,6 +8,7 @@ D:\Obsidian_5.1.7\hashes
 3. Press windows key + R and enter shell:startup
 4. Then put that shortcut in the startup folder. 
 
-Note: 
+Notes: 
   When using with Obsidian disable hash sync option.
+  Disclaimer: I don't know yet how to build releases with C# so the executable is added manually temporarily.
 Enjoy updated hashes.
