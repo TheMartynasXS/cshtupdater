@@ -11,13 +11,14 @@ namespace cshtupdater
         {
             Dictionary<string, string> HashFiles = new Dictionary<string, string>
             {
-                { "binentries", "https://raw.communitydragon.org/binviewer/hashes/hashes.binentries.txt" },
-                { "binfields", "https://raw.communitydragon.org/binviewer/hashes/hashes.binfields.txt" },
-                { "binhashes", "https://raw.communitydragon.org/binviewer/hashes/hashes.binhashes.txt" },
-                { "bintypes", "https://raw.communitydragon.org/binviewer/hashes/hashes.bintypes.txt" },
-                { "game", "https://raw.communitydragon.org/binviewer/hashes/hashes.game.txt" },
-                { "lcu", "https://raw.communitydragon.org/binviewer/hashes/hashes.lcu.txt" },
-                { "rst", "https://raw.communitydragon.org/binviewer/hashes/hashes.rst.txt" }
+                { "binentries", "https://github.com/CommunityDragon/Data/blob/master/hashes/lol/hashes.binentries.txt" },
+                { "binfields", "https://github.com/CommunityDragon/Data/blob/master/hashes/lol/hashes.binfields.txt" },
+                { "binhashes", "https://github.com/CommunityDragon/Data/blob/master/hashes/lol/hashes.binhashes.txt" },
+                { "bintypes", "https://github.com/CommunityDragon/Data/blob/master/hashes/lol/hashes.bintypes.txt" },
+                { "game0", "https://github.com/CommunityDragon/Data/blob/master/hashes/lol/hashes.game.txt.0" },
+                { "game1", "https://github.com/CommunityDragon/Data/blob/master/hashes/lol/hashes.game.txt.1" },
+                { "lcu", "https://github.com/CommunityDragon/Data/blob/master/hashes/lol/hashes.lcu.txt" },
+                { "rst", "https://github.com/CommunityDragon/Data/blob/master/hashes/lol/hashes.rst.txt" }
             };
             
             string path = Directory.GetCurrentDirectory();
