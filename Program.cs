@@ -11,14 +11,14 @@ namespace cshtupdater
         {
             Dictionary<string, string> HashFiles = new Dictionary<string, string>
             {
-                { "binentries", "https://github.com/CommunityDragon/Data/blob/master/hashes/lol/hashes.binentries.txt" },
-                { "binfields", "https://github.com/CommunityDragon/Data/blob/master/hashes/lol/hashes.binfields.txt" },
-                { "binhashes", "https://github.com/CommunityDragon/Data/blob/master/hashes/lol/hashes.binhashes.txt" },
-                { "bintypes", "https://github.com/CommunityDragon/Data/blob/master/hashes/lol/hashes.bintypes.txt" },
-                { "game0", "https://github.com/CommunityDragon/Data/blob/master/hashes/lol/hashes.game.txt.0" },
-                { "game1", "https://github.com/CommunityDragon/Data/blob/master/hashes/lol/hashes.game.txt.1" },
-                { "lcu", "https://github.com/CommunityDragon/Data/blob/master/hashes/lol/hashes.lcu.txt" },
-                { "rst", "https://github.com/CommunityDragon/Data/blob/master/hashes/lol/hashes.rst.txt" }
+                { "binentries", "https://raw.githubusercontent.com/CommunityDragon/Data/master/hashes/lol/hashes.binentries.txt" },
+                { "binfields", "https://raw.githubusercontent.com/CommunityDragon/Data/master/hashes/lol/hashes.binfields.txt" },
+                { "binhashes", "https://raw.githubusercontent.com/CommunityDragon/Data/master/hashes/lol/hashes.binhashes.txt" },
+                { "bintypes", "https://raw.githubusercontent.com/CommunityDragon/Data/master/hashes/lol/hashes.bintypes.txt" },
+                { "game0", "https://raw.githubusercontent.com/CommunityDragon/Data/master/hashes/lol/hashes.game.txt.0" },
+                { "game1", "https://raw.githubusercontent.com/CommunityDragon/Data/master/hashes/lol/hashes.game.txt.1" },
+                { "lcu", "https://raw.githubusercontent.com/CommunityDragon/Data/master/hashes/lol/hashes.lcu.txt" },
+                { "rst", "https://raw.githubusercontent.com/CommunityDragon/Data/master/hashes/lol/hashes.rst.txt" }
             };
             
             string path = Directory.GetCurrentDirectory();
