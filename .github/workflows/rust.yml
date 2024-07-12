@@ -16,7 +16,7 @@ jobs:
       - uses: taiki-e/create-gh-release-action@v1
         with:
           # (optional) Path to changelog.
-          allow_empty_changelog: true # Add this line
+          allow-missing-changelog: true # Add this line
           # (required) GitHub token for creating GitHub Releases.
           token: ${{ secrets.GITHUB_TOKEN }}
 
