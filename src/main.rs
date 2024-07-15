@@ -5,7 +5,8 @@ fn main() {
     let cwd = std::env::current_dir().unwrap();
 
     let first_run = check_file_exists("config.ini");
-    if !first_run {
+
+    if !(first_run || args().any(|arg| arg == "--skip")) {
         //Ask whether to create compatibility files and store it in config.ini
         println!("Do you want to create compatibility files (obsidian <6.0.0)? (y/n)");
         let mut input = String::new();
@@ -29,7 +30,7 @@ fn main() {
             let shortcut_path = format!("{}\\cshtupdater.bat", startup_path);
             if std::fs::metadata(&shortcut_path).is_err() {
                 //join cwd with filename and
-                let content = format!("{}\\cshtupdater.exe --skip", cwd.display());
+                let content = format!("cd {}\n\\cshtupdater.exe --skip", cwd.display());
                 std::fs::write(&shortcut_path, content).unwrap();
                 println!("Shortcut created: {}", shortcut_path);
             }
