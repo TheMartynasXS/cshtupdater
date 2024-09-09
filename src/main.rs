@@ -3,30 +3,40 @@ use native_dialog::FileDialog;
 use std::{
 	env::args,
 	fs::read_to_string,
-	path::{PathBuf},
+	path::{PathBuf}
 };
 
 fn main() {
-	//get current working directory
 	let cwd = std::env::current_dir().unwrap();
 
 	if !exists("hash_dirs.txt"){
 		std::fs::write("hash_dirs.txt", "").unwrap();
 	}
 
-	let actions = &["Hashtable settings", "Update", "Exit"];
+	let shortcut_path = format!("{}\\force_update.bat", cwd.display());
+	if std::fs::metadata(&shortcut_path).is_err() {
+		let content = "cshtupdater.exe --force --skip";
+		std::fs::write(&shortcut_path, content).unwrap();
+		println!("Shortcut created: {}", shortcut_path);
+	}
+
+	let actions = &["Hashtable settings", "Update", "Settings", "Exit"];
+
 
 	if check_flag(args().collect(), "--skip") {
-		update(&cwd);
-		let shortcut_path = format!("{}\\force_update.bat", cwd.display());
-		if std::fs::metadata(&shortcut_path).is_err() {
-			let content = "cshtupdater.exe --force";
-			std::fs::write(&shortcut_path, content).unwrap();
-			println!("Shortcut created: {}", shortcut_path);
+		let dirs = read_lines("hash_dirs.txt");
+		for dir in dirs {
+			let path = PathBuf::from(dir);
+			update(&path);
 		}
 		return;
 	}
+
 	loop {
+		print!("{esc}c", esc = 27 as char);
+		println!(
+			"Usage: \narrows - navigate between options\nspace - select option\nenter - confirm selection"
+		);
 		let action = Select::with_theme(&ColorfulTheme::default())
 			.with_prompt("Pick an option")
 			.default(0)
@@ -37,7 +47,6 @@ fn main() {
 		println!("Selection: {}", action);
 		if action == 0 {
 			hash_setup(&cwd);
-			println!("done");
 		} else if action == 1 {
 			 // for each directory in hash_dirs.txt run update function
 			let dirs = read_lines("hash_dirs.txt");
@@ -45,7 +54,35 @@ fn main() {
 				let path = PathBuf::from(dir);
 				update(&path);
 			}
-		} else {
+		} else if action == 2{
+
+			let startup_path = format!(
+				"{}\\Microsoft\\Windows\\Start Menu\\Programs\\Startup",
+				std::env::var("APPDATA").unwrap()
+			);
+			let shortcut_path = format!("{}\\cshtupdater.bat", startup_path);
+
+			let setting_options = &["Run on startup"];
+			let selection = MultiSelect::with_theme(&ColorfulTheme::default())
+					.with_prompt("Select wanted features")
+					.items(&setting_options[..])
+					.defaults(&[exists(&shortcut_path)])
+					.interact()
+					.unwrap();
+
+			if selection.contains(&0){
+				if std::fs::metadata(&shortcut_path).is_err() {
+					let content = format!("cd {}\ncshtupdater.exe --skip", cwd.display());
+					std::fs::write(&shortcut_path, content).unwrap();
+					println!("Shortcut created: {}", shortcut_path);
+				}
+			}
+			else {
+				if exists(&shortcut_path){
+					std::fs::remove_file(&shortcut_path).unwrap();
+				}
+			}
+		}else {
 			break;
 		}
 	}
@@ -70,7 +107,9 @@ fn hash_setup(cwd: &PathBuf) {
 						.set_location(&cwd)
 						.show_open_single_dir()
 						.unwrap();
-
+				if path.is_none() {
+					break 'outer;
+				}
 				if !(path.clone().unwrap().ends_with("hashes")
 						|| path.clone().unwrap().ends_with("wad_hashtables"))
 				{
@@ -130,7 +169,6 @@ fn check_flag(args: Vec<String>, flag: &str) -> bool {
 
 fn read_lines(filename: &str) -> Vec<String> {
 	let mut result = Vec::new();
-
 	for line in read_to_string(filename).unwrap().lines() {
 		if !result.contains(&line.to_string()) {
 			result.push(line.to_string());
@@ -164,8 +202,6 @@ fn update(path: &PathBuf) {
 	];
 
 	let force = check_flag(args().collect(), "--force");
-
-
 	for (i, link) in links.iter().enumerate() {
 		//concat working directory with filename
 		let file = format!("{}\\{}", path.display(), files[i]);
